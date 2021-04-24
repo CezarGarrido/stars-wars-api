@@ -1,30 +1,50 @@
+# Starwars api
 
 
-## Godoc
-godoc -http=:6060
+### Installation
 
-## Go test
-go test -v ./... -count=1
+Requirements:
 
-### MONGO
+- [Golang](https://golang.org.dl/).
+- [MongoDB](https://mongodb.com).
 
-wget https://downloads.mongodb.com/compass/mongodb-compass_1.21.1_amd64.deb
-sudo dpkg -i mongodb-compass_1.21.1_amd64.deb
-sudo apt --fix-broken install
-mongodb-compass
+Install the dependencies and run the project.
 
-# Funcionalidades desejadas: 
+```sh
+$ cd star-wars-api
+$ go run main.go
+```
 
-- Adicionar um planeta (com nome, clima e terreno)
+For production enviroments
 
-- Listar planetas, ok
+```sh
+$ go build main.go
+$ ./main
+```
 
-- Buscar por nome, ok
+### Development
+Open your favorite Terminal and run these commands.
 
-- Buscar por ID, ok
+Run Project:
+```sh
+$ go run main.go
+```
 
-- Remover planeta, ok
+(Optional) Run Tests:
+```sh
+$ go test -v ./... -count=1
+```
 
+(Optional) Run Godoc Documentation:
+```sh
+$ godoc -http=:6060
+```
+
+#### Building for source
+For production release:
+```sh
+$ go build main.go
+```
 
 ## TODO
 * Testar a api

@@ -2,7 +2,6 @@ package usecase
 
 import (
 	"context"
-	"log"
 
 	"github.com/CezarGarrido/star-wars-api/entity"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -27,7 +26,6 @@ func (uc *PlanetUsecase) Create(ctx context.Context, planet entity.Planet) (*ent
 
 	swapiPlanet, err := uc.SwapiService.FindPlanetByName(planet.Name)
 	if err != nil {
-		log.Println(err.Error())
 		return nil, entity.ErrNotFoundPlanet
 	}
 
@@ -35,7 +33,6 @@ func (uc *PlanetUsecase) Create(ctx context.Context, planet entity.Planet) (*ent
 
 	newPlanet, err := uc.PlanetRepo.Create(ctx, planet)
 	if err != nil {
-		log.Println(err.Error())
 		return nil, entity.ErrFailedCreatePlanet
 	}
 
