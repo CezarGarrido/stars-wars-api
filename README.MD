@@ -46,15 +46,24 @@ For production release:
 $ go build main.go
 ```
 
-
-
 ## TODO
 * Testar a api
 * Implementar funções restantes no banco de dados ok
 
+### New Planet
 curl --header "Content-Type: application/json" \
   --request POST \
   --data '{"name": "Alderaan", "climate": "temperate", "terrain": "grasslands, mountains"}' \
   http://localhost:8089/planets
 
+### Delete by planet ID
 curl -X "DELETE" http://localhost:8089/planets/6082944dc3e8a74a7cf6a892
+
+### List all planets
+curl http://localhots:8089/planets
+
+### Find planet by ID
+curl http://localhost:8089/planets/1
+
+### Find planet by name
+curl http://localhost:8089/planets?name=planetName

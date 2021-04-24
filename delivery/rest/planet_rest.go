@@ -8,15 +8,17 @@ import (
 	"github.com/gorilla/mux"
 )
 
+// NewPlanetDeliveryRest returns a new PlanetDeliveryRest
 func NewPlanetDeliveryRest(planetUsecase entity.PlanetUsecase) *PlanetDeliveryRest {
 	return &PlanetDeliveryRest{planetUsecase}
 }
 
+// PlanetDeliveryRest structure responsible for the rest API methods
 type PlanetDeliveryRest struct {
 	planetUsecase entity.PlanetUsecase
 }
 
-// CreateRoutes
+// CreateRoutes creates api routes
 func (planetDeliveryRest *PlanetDeliveryRest) CreateRoutes(mux *mux.Router) {
 
 	mux.HandleFunc("/planets", planetDeliveryRest.Create).Methods("POST")
@@ -28,7 +30,8 @@ func (planetDeliveryRest *PlanetDeliveryRest) CreateRoutes(mux *mux.Router) {
 	mux.HandleFunc("/planets/{id}", planetDeliveryRest.FindByID).Methods("GET")
 }
 
-// Create
+// POST /planets
+// Create new planet
 func (planetDeliveryRest *PlanetDeliveryRest) Create(w http.ResponseWriter, r *http.Request) {
 	var planet entity.Planet
 
@@ -47,7 +50,8 @@ func (planetDeliveryRest *PlanetDeliveryRest) Create(w http.ResponseWriter, r *h
 	JSON(w, newPlanet, http.StatusCreated)
 }
 
-// Delete
+// DELETE /planets/{id}
+// Delete planet by ID
 func (planetDeliveryRest *PlanetDeliveryRest) Delete(w http.ResponseWriter, r *http.Request) {
 
 	planetID := mux.Vars(r)["id"]
@@ -61,7 +65,8 @@ func (planetDeliveryRest *PlanetDeliveryRest) Delete(w http.ResponseWriter, r *h
 	JSON(w, planetID, http.StatusOK)
 }
 
-// FindByID
+// GET /planets
+// Find planet by ID
 func (planetDeliveryRest *PlanetDeliveryRest) FindByID(w http.ResponseWriter, r *http.Request) {
 	planetID := mux.Vars(r)["id"]
 	planet, err := planetDeliveryRest.planetUsecase.FindByID(r.Context(), planetID)
@@ -72,7 +77,10 @@ func (planetDeliveryRest *PlanetDeliveryRest) FindByID(w http.ResponseWriter, r 
 	JSON(w, planet, http.StatusOK)
 }
 
-// Find
+// GET /planets
+// Find all planets
+// Params
+// - name : Used to search for a planet by name
 func (planetDeliveryRest *PlanetDeliveryRest) Find(w http.ResponseWriter, r *http.Request) {
 	name, ok := r.URL.Query()["name"]
 	if ok && len(name[0]) > 0 {
@@ -82,7 +90,7 @@ func (planetDeliveryRest *PlanetDeliveryRest) Find(w http.ResponseWriter, r *htt
 	}
 }
 
-// doFindByName
+// Find planet by name
 func (planetDeliveryRest *PlanetDeliveryRest) doFindByName(w http.ResponseWriter, r *http.Request, name string) {
 	planets, err := planetDeliveryRest.planetUsecase.FindByName(r.Context(), name)
 	if err != nil {
@@ -92,7 +100,7 @@ func (planetDeliveryRest *PlanetDeliveryRest) doFindByName(w http.ResponseWriter
 	JSON(w, planets, http.StatusOK)
 }
 
-// doFindAll
+// Find all planets
 func (planetDeliveryRest *PlanetDeliveryRest) doFindAll(w http.ResponseWriter, r *http.Request) {
 	planets, err := planetDeliveryRest.planetUsecase.FindAll(r.Context())
 	if err != nil {
