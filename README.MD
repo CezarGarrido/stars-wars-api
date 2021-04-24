@@ -46,6 +46,8 @@ For production release:
 $ go build main.go
 ```
 
+
+
 ## TODO
 * Testar a api
 * Implementar funções restantes no banco de dados ok
