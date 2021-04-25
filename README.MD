@@ -76,10 +76,10 @@ curl --header "Content-Type: application/json" \
 curl -X "DELETE" http://localhost:8089/planets/6082944dc3e8a74a7cf6a892
 
 ### List all planets
-curl http://localhots:8089/planets
+curl http://localhost:8089/planets
 
 ### Find planet by ID
-curl http://localhost:8089/planets/1
+curl http://localhost:8089/planets/60828ddf4cf18a8317253e6a
 
 ### Find planet by name
-curl http://localhost:8089/planets?name=planetName
+curl http://localhost:8089/planets?name=Alderaan

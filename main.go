@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -22,12 +21,10 @@ func main() {
 	port := map[bool]string{true: os.Getenv("PORT"), false: "8089"}[os.Getenv("PORT") != ""]
 
 	mongoURL := map[bool]string{true: os.Getenv("MONGO_URL"), false: infra.MONGO_DEFAULT_URL}[os.Getenv("MONGO_URL") != ""]
-	fmt.Println("mongoURL", mongoURL)
 	mongoClient, err := infra.NewMongoClient(mongoURL)
 	if err != nil {
 		log.Fatal(err)
 	}
-
 	//repo
 	planetRepo := repository.NewPlanetMongoRepo(mongoClient)
 
