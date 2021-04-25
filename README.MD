@@ -9,14 +9,14 @@ Requirements:
 
 Install the dependencies and run the project.
 
-```sh
+```bash
 $ cd star-wars-api
 $ go run main.go
 ```
 
 For production enviroments
 
-```sh
+```bash
 $ go build main.go
 $ ./main
 ```
@@ -25,36 +25,48 @@ $ ./main
 Open your favorite Terminal and run these commands.
 
 Run Project:
-```sh
+```bash
 $ go run main.go
 ```
 
 (Optional) Run Tests:
-```sh
+```bash
 $ go test -v ./... -count=1
+
 ```
+
 (Optional) Rung Tests Coverage:
-```sh
+```bash
 $ go test -v ./... -count=1 -coverprofile=coverage.out
 $ go tool cover -html=coverage.out
+
 ```
 (Optional) Run Godoc Documentation:
-```sh
+```bash
 $ godoc -http=:6060
 ```
 
 #### Building for source
 For production release:
-```sh
+```bash
 $ go build main.go
 ```
+
+#### Environment variables
+Environment variables that are used in the project. 
+if you do not define these variables default values ​​embedded in the code will be used.
+
+| Name                      | Description                                     |
+|---------------------------|-------------------------------------------------|
+| PORT                      | HTTP server port, default `8089`                |
+| MONGO_URL                 | MongoDB URL, default `mongodb://localhost:27017`|
 
 ## TODO
 * Testar a api
 * Implementar funções restantes no banco de dados ok
 
 ## CURL
-### New Planet
+### Add New Planet
 curl --header "Content-Type: application/json" \
   --request POST \
   --data '{"name": "Alderaan", "climate": "temperate", "terrain": "grasslands, mountains"}' \

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -11,19 +12,17 @@ import (
 	"github.com/CezarGarrido/star-wars-api/service"
 	"github.com/CezarGarrido/star-wars-api/usecase"
 	"github.com/gorilla/mux"
-	"github.com/joho/godotenv"
 )
 
 // main: initialize application
 func main() {
-	godotenv.Load()
 
 	log.Println("🔧 Configure...")
 
 	port := map[bool]string{true: os.Getenv("PORT"), false: "8089"}[os.Getenv("PORT") != ""]
 
 	mongoURL := map[bool]string{true: os.Getenv("MONGO_URL"), false: infra.MONGO_DEFAULT_URL}[os.Getenv("MONGO_URL") != ""]
-
+	fmt.Println("mongoURL", mongoURL)
 	mongoClient, err := infra.NewMongoClient(mongoURL)
 	if err != nil {
 		log.Fatal(err)

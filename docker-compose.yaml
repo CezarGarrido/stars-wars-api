@@ -1,0 +1,29 @@
+version: '3.7'
+services:
+    # Server Api
+    server:
+        build: 
+            context: .
+            dockerfile: Dockerfile
+        depends_on:
+            - 'mongo'
+        networks:
+            - default
+        ports:
+            - '8089:8089'
+        environment:
+            MONGO_URL: mongodb://admin_user:admin_password@mongo:27017/starwars_db?authSource=admin
+            PORT: 8089
+    # MongoDB
+    mongo:
+        image: 'mongo'
+        container_name: mongo
+        volumes:
+            - data:/mongo/data
+        restart: always
+        environment:
+            MONGO_INITDB_DATABASE: starwars_db
+            MONGO_INITDB_ROOT_USERNAME: admin_user
+            MONGO_INITDB_ROOT_PASSWORD: admin_password
+volumes:
+    data:
