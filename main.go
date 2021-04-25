@@ -41,7 +41,9 @@ func main() {
 
 	muxRouter := mux.NewRouter()
 
-	planetDeliveryRest.CreateRoutes(muxRouter)
+	api := muxRouter.PathPrefix("/api").Subrouter()
+	apiV1 := api.PathPrefix("/v1").Subrouter()
+	planetDeliveryRest.CreateRoutes(apiV1)
 
 	log.Println("🚀 api has launched from http://localhost:" + port)
 

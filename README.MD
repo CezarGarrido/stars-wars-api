@@ -51,8 +51,6 @@ For production release:
 ```bash
 $ go build main.go
 ```
-
-
 ### Docker
 Nasa Probe is very easy to install and deploy in a Docker container.
 
@@ -82,16 +80,16 @@ if you do not define these variables default values ​​embedded in the code w
 curl --header "Content-Type: application/json" \
   --request POST \
   --data '{"name": "Alderaan", "climate": "temperate", "terrain": "grasslands, mountains"}' \
-  http://localhost:8089/planets
+  http://localhost:8089/api/v1/planets
 
 ### Delete planet By ID
-curl -X "DELETE" http://localhost:8089/planets/6082944dc3e8a74a7cf6a892
+curl -X "DELETE" http://localhost:8089/api/v1/planets/6082944dc3e8a74a7cf6a892
 
 ### List all planets
-curl http://localhost:8089/planets
+curl http://localhost:8089/api/v1/planets
 
 ### Find planet by ID
-curl http://localhost:8089/planets/60828ddf4cf18a8317253e6a
+curl http://localhost:8089/api/v1/planets/60828ddf4cf18a8317253e6a
 
 ### Find planet by name
-curl http://localhost:8089/planets?name=Alderaan
+curl http://localhost:8089/api/v1/planets?name=Alderaan
