@@ -2,9 +2,11 @@ package infra
 
 import (
 	"context"
+	"time"
 
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
+	"go.mongodb.org/mongo-driver/mongo/readpref"
 )
 
 const (
@@ -19,7 +21,7 @@ func NewMongoClient(url string) (*mongo.Client, error) {
 
 	clientOpts := options.Client().ApplyURI(url)
 
-	ctx, cancelFunc := context.WithTimeout(ctx, 12000)
+	ctx, cancelFunc := context.WithTimeout(ctx, 12*time.Second)
 	defer cancelFunc()
 
 	client, err := mongo.Connect(ctx, clientOpts)
@@ -27,7 +29,7 @@ func NewMongoClient(url string) (*mongo.Client, error) {
 		return nil, err
 	}
 
-	err = client.Ping(context.TODO(), nil)
+	err = client.Ping(ctx, readpref.Primary())
 	if err != nil {
 		return nil, err
 	}
