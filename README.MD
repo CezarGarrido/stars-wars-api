@@ -56,11 +56,8 @@ $ go build main.go
 Environment variables that are used in the project. 
 if you do not define these variables default values ​​embedded in the code will be used.
 
-| Name                      | Description                                     |
-|---------------------------|-------------------------------------------------|
-| PORT                      | HTTP server port, default `8089`                |
-| MONGO_URL                 | MongoDB URL, default `mongodb://localhost:27017`|
-
+- PORT : HTTP server port, default `8089`.
+- MONGO_URL : MongoDB URL, default `mongodb://localhost:27017`.
 
 ## CURL
 ### Add new planet
