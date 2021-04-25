@@ -4,8 +4,8 @@
 
 Requirements:
 
-- [Golang](https://golang.org.dl/).
-- [MongoDB](https://mongodb.com).
+- [Golang](https://golang.org.dl/)
+- [MongoDB](https://mongodb.com)
 
 Install the dependencies and run the project.
 
@@ -50,6 +50,24 @@ $ godoc -http=:6060
 For production release:
 ```bash
 $ go build main.go
+```
+
+
+### Docker
+Nasa Probe is very easy to install and deploy in a Docker container.
+
+The Docker will expose port 8089, so change this within the Dockerfile if necessary. 
+When ready, simply use the Dockerfile to build the image.
+Run with docker-compose
+
+```bash
+$ docker-compose up --build
+```
+
+Verify the deployment by navigating to your server address in your preferred browser.
+
+```bash
+127.0.0.1:8089/api/v1/planets
 ```
 
 #### Environment variables
