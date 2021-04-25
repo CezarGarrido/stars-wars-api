@@ -16,7 +16,7 @@ import (
 // main: initialize application
 func main() {
 
-	log.Println("🔧 Configure...")
+	log.Println("🔧 preparing environment...")
 
 	port := map[bool]string{true: os.Getenv("PORT"), false: "8089"}[os.Getenv("PORT") != ""]
 
