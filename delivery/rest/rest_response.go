@@ -2,14 +2,9 @@ package rest
 
 import (
 	"encoding/json"
+	"log"
 	"net/http"
 )
-
-type Link struct {
-	Href string `json:"href"`
-	Rel  string `json:"rel"`
-	Type string `json:"type"`
-}
 
 func StatusCode(w http.ResponseWriter, statusCode int) {
 	w.WriteHeader(statusCode)
@@ -18,7 +13,9 @@ func StatusCode(w http.ResponseWriter, statusCode int) {
 func JSON(w http.ResponseWriter, payload interface{}, statusCode int) {
 	StatusCode(w, statusCode)
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
-	json.NewEncoder(w).Encode(payload)
+	if err := json.NewEncoder(w).Encode(payload); err != nil {
+		log.Panicln("Error encoding http return:", err.Error())
+	}
 }
 
 func Error(w http.ResponseWriter, payload interface{}, statusCode int) {

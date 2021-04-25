@@ -1,6 +1,5 @@
 # Starwars api
 
-
 ### Installation
 
 Requirements:
@@ -50,6 +49,7 @@ $ go build main.go
 * Testar a api
 * Implementar funções restantes no banco de dados ok
 
+## CURL
 ### New Planet
 curl --header "Content-Type: application/json" \
   --request POST \

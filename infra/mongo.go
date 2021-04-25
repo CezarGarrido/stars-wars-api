@@ -9,6 +9,8 @@ import (
 const (
 	MONGO_DEFAULT_URL = "mongodb://localhost:27017"
 )
+
+// NewMongoClient Returns a new mongo Client
 func NewMongoClient(url string) (*mongo.Client, error) {
 
 	clientOpts := options.Client().ApplyURI(url)

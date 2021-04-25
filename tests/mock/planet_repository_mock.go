@@ -13,6 +13,7 @@ import (
 type MockedPlanetRepo struct {
 	Planets []*entity.Planet
 }
+var teste int;
 
 func (m *MockedPlanetRepo) Setup() {
 	for i := 0; i < 10; i++ {

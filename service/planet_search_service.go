@@ -5,14 +5,17 @@ import (
 	"github.com/CezarGarrido/star-wars-api/service/swapi"
 )
 
-func NewSwapiService() entity.PlanetSwapiService {
+// Returns a new implementatio for PlanetSearchService
+func NewSwapiService() entity.PlanetSearchService {
 	return &SwapiService{}
 }
 
+//Implements a PlanetSearchService interface
 type SwapiService struct {
 }
 
-//FindPlanetByName
+//Find planet by name
+//Returns the found planet or error if it does not finf the planet.
 func (swapiService *SwapiService) FindPlanetByName(name string) (*entity.Planet, error) {
 	swapiPlanet, err := swapi.NewClient().FindPlanetByName(name)
 	if err != nil {

@@ -22,7 +22,7 @@ func main() {
 
 	port := map[bool]string{true: os.Getenv("PORT"), false: "8089"}[os.Getenv("PORT") != ""]
 
-	mongoURL := map[bool]string{true: os.Getenv("MONGO_URL"), false: infra.MONGO_DEFAULT_URL}[os.Getenv("PORT") != ""]
+	mongoURL := map[bool]string{true: os.Getenv("MONGO_URL"), false: infra.MONGO_DEFAULT_URL}[os.Getenv("MONGO_URL") != ""]
 
 	mongoClient, err := infra.NewMongoClient(mongoURL)
 	if err != nil {
@@ -33,10 +33,10 @@ func main() {
 	planetRepo := repository.NewPlanetMongoRepo(mongoClient)
 
 	//service
-	swapiService := service.NewSwapiService()
+	planetSearchService := service.NewSwapiService()
 
 	//usecase
-	planetUsecase := usecase.NewPlanetUsecase(planetRepo, swapiService)
+	planetUsecase := usecase.NewPlanetUsecase(planetRepo, planetSearchService)
 
 	//delivery
 	planetDeliveryRest := rest.NewPlanetDeliveryRest(planetUsecase)

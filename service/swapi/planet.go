@@ -37,16 +37,16 @@ type PlanetSearchResult struct {
 	Planets  []Planet    `json:"results"`
 }
 
-// CountFilms retorna a quantidade de filmes que o planeta esteve.
+// CountFilms returns the amount of films that the planet has been.
 func (planet *Planet) CountFilms() int {
 	return len(planet.Films)
 }
 
 // Planet retrieves the planet with the given name.
 // Params
-// - planetName: O nome do planeta.
+// - planetName: The planet name
 // Returns
-// Retorna o planeta que corresponde ao nome ou erro caso não encontre o planeta.
+// The found planet or error if it does not find the planet.
 func (cli *Client) FindPlanetByName(planetName string) (planet Planet, err error) {
 
 	req, err := http.NewRequest(http.MethodGet, cli.url+PLANETS_SEARCH_URL+planetName, nil)
@@ -68,8 +68,7 @@ func (cli *Client) FindPlanetByName(planetName string) (planet Planet, err error
 	return filterPlanetByName(result.Planets, planetName)
 }
 
-// filterPlanetByName retorna o planeta na lista de planetas.
-// Realiza uma busca pelo nome do planeta.
+// filterPlanetByName find planet by name in planet list.
 func filterPlanetByName(planets []Planet, planetName string) (Planet, error) {
 	for _, p := range planets {
 		if p.Name == planetName {

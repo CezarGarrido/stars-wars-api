@@ -37,9 +37,10 @@ func (planetDeliveryRest *PlanetDeliveryRest) Create(w http.ResponseWriter, r *h
 
 	err := json.NewDecoder(r.Body).Decode(&planet)
 	if err != nil {
-		Error(w, err.Error(), http.StatusBadRequest)
+		Error(w, "Failed to decode JSON", http.StatusBadRequest)
 		return
 	}
+
 	planetToInsert := *entity.NewPlanet(planet.Name, planet.Climate, planet.Terrain)
 
 	newPlanet, err := planetDeliveryRest.planetUsecase.Create(r.Context(), planetToInsert)
