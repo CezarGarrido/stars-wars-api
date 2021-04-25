@@ -61,18 +61,15 @@ if you do not define these variables default values ​​embedded in the code w
 | PORT                      | HTTP server port, default `8089`                |
 | MONGO_URL                 | MongoDB URL, default `mongodb://localhost:27017`|
 
-## TODO
-* Testar a api
-* Implementar funções restantes no banco de dados ok
 
 ## CURL
-### Add New Planet
+### Add new planet
 curl --header "Content-Type: application/json" \
   --request POST \
   --data '{"name": "Alderaan", "climate": "temperate", "terrain": "grasslands, mountains"}' \
   http://localhost:8089/planets
 
-### Delete by planet ID
+### Delete planet By ID
 curl -X "DELETE" http://localhost:8089/planets/6082944dc3e8a74a7cf6a892
 
 ### List all planets

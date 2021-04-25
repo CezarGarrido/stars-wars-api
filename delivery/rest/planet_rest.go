@@ -45,7 +45,7 @@ func (planetDeliveryRest *PlanetDeliveryRest) Create(w http.ResponseWriter, r *h
 
 	newPlanet, err := planetDeliveryRest.planetUsecase.Create(r.Context(), planetToInsert)
 	if err != nil {
-		Error(w, err.Error(), http.StatusBadRequest)
+		Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 	JSON(w, newPlanet, http.StatusCreated)

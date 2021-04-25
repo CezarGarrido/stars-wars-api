@@ -9,12 +9,10 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-// MockedPlanetRepo simples mock do repositorio
+// MockedPlanetRepo simple mock planet repository.
 type MockedPlanetRepo struct {
 	Planets []*entity.Planet
 }
-
-var teste int
 
 func (m *MockedPlanetRepo) Setup() {
 	for i := 0; i < 10; i++ {

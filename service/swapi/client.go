@@ -7,7 +7,7 @@ const (
 	SEARCH_QUERY_PARAMS = "?search="
 )
 
-// Client a estrtura que representa 
+// Client connects to swapi
 type Client struct {
 	url        string       // url is the base url for SWAPI
 	httpClient *http.Client // HTTP client used to communicate with the SWAPI

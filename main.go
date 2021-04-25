@@ -21,10 +21,12 @@ func main() {
 	port := map[bool]string{true: os.Getenv("PORT"), false: "8089"}[os.Getenv("PORT") != ""]
 
 	mongoURL := map[bool]string{true: os.Getenv("MONGO_URL"), false: infra.MONGO_DEFAULT_URL}[os.Getenv("MONGO_URL") != ""]
+
 	mongoClient, err := infra.NewMongoClient(mongoURL)
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalln("error connecting to mongodb:", err.Error())
 	}
+
 	//repo
 	planetRepo := repository.NewPlanetMongoRepo(mongoClient)
 
@@ -42,6 +44,7 @@ func main() {
 	planetDeliveryRest.CreateRoutes(muxRouter)
 
 	log.Println("🚀 api has launched from http://localhost:" + port)
+
 	//launch server
 	log.Fatal(http.ListenAndServe(":"+port, muxRouter))
 }

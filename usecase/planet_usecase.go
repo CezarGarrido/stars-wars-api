@@ -51,15 +51,25 @@ func (uc *PlanetUsecase) FindAll(ctx context.Context) ([]*entity.Planet, error) 
 }
 
 func (uc *PlanetUsecase) FindByName(ctx context.Context, planetName string) (*entity.Planet, error) {
-	return uc.PlanetRepo.FindByName(ctx, planetName)
+	planet, err := uc.PlanetRepo.FindByName(ctx, planetName)
+	if err != nil {
+		return nil, entity.ErrNotFoundPlanet
+	}
+	return planet, nil
 }
 
 func (uc *PlanetUsecase) FindByID(ctx context.Context, planetID string) (*entity.Planet, error) {
-	id, _ := primitive.ObjectIDFromHex(planetID)
+	id, err := primitive.ObjectIDFromHex(planetID)
+	if err != nil {
+		return nil, entity.ErrInvalidID
+	}
 	return uc.PlanetRepo.FindByID(ctx, id)
 }
 
 func (uc *PlanetUsecase) Delete(ctx context.Context, planetID string) error {
-	id, _ := primitive.ObjectIDFromHex(planetID)
+	id, err := primitive.ObjectIDFromHex(planetID)
+	if err != nil {
+		return entity.ErrInvalidID
+	}
 	return uc.PlanetRepo.Delete(ctx, id)
 }
