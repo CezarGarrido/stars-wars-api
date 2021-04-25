@@ -33,7 +33,11 @@ $ go run main.go
 ```sh
 $ go test -v ./... -count=1
 ```
-
+(Optional) Rung Tests Coverage:
+```sh
+$ go test -v ./... -count=1 -coverprofile=coverage.out
+$ go tool cover -html=coverage.out
+```
 (Optional) Run Godoc Documentation:
 ```sh
 $ godoc -http=:6060

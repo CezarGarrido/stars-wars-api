@@ -15,9 +15,9 @@ var ErrCreatePlanet = errors.New("Error creating planet")
 // Planet is the structure that represents the data of a planet.
 type Planet struct {
 	ID         primitive.ObjectID `json:"id,omitempty" bson:"_id,omitempty"` //  the planet id, automatically generated.
-	Name       string             `json:"name"`                              //  the name of the planet, mandatory and unique.
-	Climate    string             `json:"climate"`                           //  the climate of the planet.
-	Terrain    string             `json:"terrain"`                           //  the planet's terrain.
+	Name       string             `json:"name" valid:"required"`             //  the name of the planet, mandatory and unique.
+	Climate    string             `json:"climate" valid:"required"`          //  the climate of the planet.
+	Terrain    string             `json:"terrain" valid:"required"`          //  the planet's terrain.
 	FilmsCount int                `json:"films_count"`                       //  the amount of films that the planet has been.
 }
 
@@ -25,7 +25,7 @@ type Planet struct {
 //
 // Parameters:
 //
-//- name: The name of the planet.
+// - name: The name of the planet.
 //
 // - climate: The climate of the planet.
 //

@@ -3,6 +3,7 @@ module github.com/CezarGarrido/star-wars-api
 go 1.14
 
 require (
+	github.com/asaskevich/govalidator v0.0.0-20210307081110-f21760c49a8d
 	github.com/gorilla/mux v1.8.0
 	github.com/joho/godotenv v1.3.0
 	github.com/kr/text v0.2.0 // indirect

@@ -113,12 +113,8 @@ func TestDelete(t *testing.T) {
 		}
 
 		router := mux.NewRouter()
-		// We create a ResponseRecorder (which satisfies http.ResponseWriter) to record the response.
 		rr := httptest.NewRecorder()
-
 		router.HandleFunc("/planets/{id}", planetDeliveryRest.Delete)
-		// Our handlers satisfy http.Handler, so we can call their ServeHTTP method
-		// directly and pass in our Request and ResponseRecorder.
 		router.ServeHTTP(rr, req)
 
 		var deletedID string
@@ -132,4 +128,162 @@ func TestDelete(t *testing.T) {
 			t.Fatalf("got %s; want %s", deletedID, planetID)
 		}
 	}
+}
+
+func TestFindByID(t *testing.T) {
+	testCases := []struct {
+		planet entity.Planet
+	}{
+		{*entity.NewPlanet("find-api-test1", "climate-test", "terrain-test")},
+		{*entity.NewPlanet("find-api-test2", "climate-test", "terrain-test")},
+		{*entity.NewPlanet("find-api-test3", "climate-test", "terrain-test")},
+		{*entity.NewPlanet("find-api-test4", "climate-test", "terrain-test")},
+		{*entity.NewPlanet("find-api-test5", "climate-test", "terrain-test")},
+		{*entity.NewPlanet("find-api-test6", "climate-test", "terrain-test")},
+	}
+
+	ctx := context.TODO()
+
+	planetRepo := new(mock.MockedPlanetRepo)
+
+	planetSwapiService := new(mock.PlanetSwapiService)
+
+	planetUsecase := usecase.NewPlanetUsecase(planetRepo, planetSwapiService)
+
+	planetDeliveryRest := rest.NewPlanetDeliveryRest(planetUsecase)
+
+	for _, tc := range testCases {
+
+		planet, err := planetRepo.Create(ctx, tc.planet)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		planetID := planet.ID.Hex()
+
+		req, err := http.NewRequest(http.MethodDelete, "/planets/"+planetID, nil)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		router := mux.NewRouter()
+		rr := httptest.NewRecorder()
+		router.HandleFunc("/planets/{id}", planetDeliveryRest.FindByID)
+		router.ServeHTTP(rr, req)
+
+		var resultPlanet entity.Planet
+
+		err = json.Unmarshal(rr.Body.Bytes(), &resultPlanet)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if resultPlanet.Name != tc.planet.Name {
+			t.Fatalf("got %s; want %s", resultPlanet.Name, tc.planet.Name)
+		}
+
+		if resultPlanet.Climate != tc.planet.Climate {
+			t.Fatalf("got %s; want %s", resultPlanet.Climate, tc.planet.Climate)
+		}
+
+		if resultPlanet.Terrain != tc.planet.Terrain {
+			t.Fatalf("got %s; want %s", resultPlanet.Terrain, tc.planet.Terrain)
+		}
+
+	}
+}
+
+func TestFindByName(t *testing.T) {
+	testCases := []struct {
+		planet entity.Planet
+	}{
+		{*entity.NewPlanet("findname-api-test1", "climate-test", "terrain-test")},
+		{*entity.NewPlanet("findname-api-test2", "climate-test", "terrain-test")},
+		{*entity.NewPlanet("findname-api-test3", "climate-test", "terrain-test")},
+		{*entity.NewPlanet("findname-api-test4", "climate-test", "terrain-test")},
+		{*entity.NewPlanet("findname-api-test5", "climate-test", "terrain-test")},
+		{*entity.NewPlanet("findname-api-test6", "climate-test", "terrain-test")},
+	}
+
+	ctx := context.TODO()
+
+	planetRepo := new(mock.MockedPlanetRepo)
+
+	planetSwapiService := new(mock.PlanetSwapiService)
+
+	planetUsecase := usecase.NewPlanetUsecase(planetRepo, planetSwapiService)
+
+	planetDeliveryRest := rest.NewPlanetDeliveryRest(planetUsecase)
+
+	for _, tc := range testCases {
+
+		planet, err := planetRepo.Create(ctx, tc.planet)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		req, err := http.NewRequest(http.MethodDelete, "/planets?name="+planet.Name, nil)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		router := mux.NewRouter()
+		rr := httptest.NewRecorder()
+		router.HandleFunc("/planets", planetDeliveryRest.Find)
+		router.ServeHTTP(rr, req)
+
+		var resultPlanet entity.Planet
+
+		err = json.Unmarshal(rr.Body.Bytes(), &resultPlanet)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if resultPlanet.Name != tc.planet.Name {
+			t.Fatalf("got %s; want %s", resultPlanet.Name, tc.planet.Name)
+		}
+
+		if resultPlanet.Climate != tc.planet.Climate {
+			t.Fatalf("got %s; want %s", resultPlanet.Climate, tc.planet.Climate)
+		}
+
+		if resultPlanet.Terrain != tc.planet.Terrain {
+			t.Fatalf("got %s; want %s", resultPlanet.Terrain, tc.planet.Terrain)
+		}
+
+	}
+}
+
+func TestFind(t *testing.T) {
+	//ctx := context.TODO()
+
+	planetRepo := new(mock.MockedPlanetRepo)
+
+	planetRepo.Setup()
+	defer planetRepo.Reset()
+	planetSwapiService := new(mock.PlanetSwapiService)
+
+	planetUsecase := usecase.NewPlanetUsecase(planetRepo, planetSwapiService)
+
+	planetDeliveryRest := rest.NewPlanetDeliveryRest(planetUsecase)
+
+	req, err := http.NewRequest(http.MethodDelete, "/planets", nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	router := mux.NewRouter()
+	rr := httptest.NewRecorder()
+	router.HandleFunc("/planets", planetDeliveryRest.Find)
+	router.ServeHTTP(rr, req)
+
+	var resultPlanet []entity.Planet
+
+	err = json.Unmarshal(rr.Body.Bytes(), &resultPlanet)
+	if err != nil {
+		t.Fatal(err)
+	}
+	lenResult := len(resultPlanet)
+	if lenResult <= 0 {
+		t.Fatalf("got %d; want %d", lenResult, 0)
+	}
+
 }

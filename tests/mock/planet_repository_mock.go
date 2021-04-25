@@ -13,15 +13,23 @@ import (
 type MockedPlanetRepo struct {
 	Planets []*entity.Planet
 }
-var teste int;
+
+var teste int
 
 func (m *MockedPlanetRepo) Setup() {
 	for i := 0; i < 10; i++ {
-		m.Planets = append(m.Planets, entity.NewPlanet("planet-name-mocked-"+strconv.Itoa(i), "planet-climate-mocked-"+strconv.Itoa(i), "planet-terrain-mocked-"+strconv.Itoa(i)))
+		planet := entity.NewPlanet("planet-name-mocked-"+strconv.Itoa(i), "planet-climate-mocked-"+strconv.Itoa(i), "planet-terrain-mocked-"+strconv.Itoa(i))
+		planet.ID = primitive.NewObjectID()
+		m.Planets = append(m.Planets, planet)
 	}
 }
 
+func (m *MockedPlanetRepo) Reset() {
+	m.Planets = nil
+}
+
 func (m *MockedPlanetRepo) Create(ctx context.Context, planet entity.Planet) (*entity.Planet, error) {
+	planet.ID = primitive.NewObjectID()
 	m.Planets = append(m.Planets, &planet)
 	return &planet, nil
 }

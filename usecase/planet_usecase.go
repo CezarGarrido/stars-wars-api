@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/CezarGarrido/star-wars-api/entity"
+	"github.com/asaskevich/govalidator"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
@@ -19,6 +20,11 @@ type PlanetUsecase struct {
 }
 
 func (uc *PlanetUsecase) Create(ctx context.Context, planet entity.Planet) (*entity.Planet, error) {
+
+	isValid, validationErr := govalidator.ValidateStruct(planet)
+	if !isValid {
+		return nil, validationErr
+	}
 
 	planetOnDatabase, err := uc.PlanetRepo.FindByName(ctx, planet.Name)
 	if planetOnDatabase != nil && err == nil {
