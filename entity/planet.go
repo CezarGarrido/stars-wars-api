@@ -11,7 +11,7 @@ var ErrNotFoundPlanet = errors.New("Planet not found")
 var ErrDuplicatePlanet = errors.New("A planet has already been created with that name")
 var ErrFailedCreatePlanet = errors.New("It was not possible to create the planet")
 var ErrCreatePlanet = errors.New("Error creating planet")
-var ErrInvalidID = errors.New("Invalid ID")
+var ErrInvalidPlanetID = errors.New("Invalid planet ID")
 
 // Planet is the structure that represents the data of a planet.
 type Planet struct {
