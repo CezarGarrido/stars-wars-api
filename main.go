@@ -23,7 +23,10 @@ func main() {
 
 	mongoURL := map[bool]string{true: os.Getenv("MONGO_URL"), false: infra.MONGO_DEFAULT_URL}[os.Getenv("MONGO_URL") != ""]
 
-	connStr, _ := connstring.ParseAndValidate(mongoURL)
+	connStr, err := connstring.ParseAndValidate(mongoURL)
+	if err != nil {
+		log.Fatalln("error parse mongodb url:", err.Error())
+	}
 
 	mongoClient, err := infra.NewMongoClient(connStr.Original)
 	if err != nil {
