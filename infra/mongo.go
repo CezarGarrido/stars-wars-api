@@ -10,7 +10,7 @@ import (
 )
 
 const (
-	MONGO_DEFAULT_URL = "mongodb://localhost:27017"
+	MONGO_DEFAULT_URL = "mongodb://localhost:27017/starwars_db"
 )
 
 //NewMongoClient Returns a new mongo Client.

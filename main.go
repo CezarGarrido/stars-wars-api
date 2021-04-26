@@ -11,6 +11,7 @@ import (
 	"github.com/CezarGarrido/star-wars-api/service"
 	"github.com/CezarGarrido/star-wars-api/usecase"
 	"github.com/gorilla/mux"
+	"go.mongodb.org/mongo-driver/x/mongo/driver/connstring"
 )
 
 // main: initialize application
@@ -22,13 +23,15 @@ func main() {
 
 	mongoURL := map[bool]string{true: os.Getenv("MONGO_URL"), false: infra.MONGO_DEFAULT_URL}[os.Getenv("MONGO_URL") != ""]
 
-	mongoClient, err := infra.NewMongoClient(mongoURL)
+	connStr, _ := connstring.ParseAndValidate(mongoURL)
+
+	mongoClient, err := infra.NewMongoClient(connStr.Original)
 	if err != nil {
 		log.Fatalln("error connecting to mongodb:", err.Error())
 	}
 
 	//repo
-	planetRepo := repository.NewPlanetMongoRepo(mongoClient)
+	planetRepo := repository.NewPlanetMongoRepo(mongoClient.Database(connStr.Database))
 
 	//service
 	planetSearchService := service.NewSwapiService()
