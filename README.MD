@@ -76,8 +76,8 @@ if you do not define these variables default values ​​embedded in the code w
 - MONGO_URL : MongoDB URL, default `mongodb://localhost:27017`.
 
 ### API Documentation
-The api has documentation using the [Open API] specification (https://swagger.io/specification/).
-[doc-api.yml] (doc-api.yml).
+The api has documentation using the [Open API](https://swagger.io/specification/) especification
+[doc-api.yml](doc-api.yml)
 
 ## CURL
 ### Add new planet
