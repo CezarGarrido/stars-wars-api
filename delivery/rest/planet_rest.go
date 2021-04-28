@@ -95,7 +95,7 @@ func (planetDeliveryRest *PlanetDeliveryRest) Find(w http.ResponseWriter, r *htt
 func (planetDeliveryRest *PlanetDeliveryRest) doFindByName(w http.ResponseWriter, r *http.Request, name string) {
 	planets, err := planetDeliveryRest.planetUsecase.FindByName(r.Context(), name)
 	if err != nil {
-		Error(w, err.Error(), http.StatusInternalServerError)
+		Error(w, err.Error(), http.StatusNotFound)
 		return
 	}
 	JSON(w, planets, http.StatusOK)
@@ -105,7 +105,7 @@ func (planetDeliveryRest *PlanetDeliveryRest) doFindByName(w http.ResponseWriter
 func (planetDeliveryRest *PlanetDeliveryRest) doFindAll(w http.ResponseWriter, r *http.Request) {
 	planets, err := planetDeliveryRest.planetUsecase.FindAll(r.Context())
 	if err != nil {
-		Error(w, err.Error(), http.StatusInternalServerError)
+		Error(w, err.Error(), http.StatusNotFound)
 		return
 	}
 	JSON(w, planets, http.StatusOK)

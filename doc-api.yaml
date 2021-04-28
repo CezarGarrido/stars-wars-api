@@ -1,0 +1,144 @@
+openapi: 3.0.0
+info:
+  title: StarWarsAPi
+  description: Star Wars API
+  version: 1.0.0
+servers:
+  - url: http://localhost:8089/api/v1
+    description: Servers
+paths:
+  /planets:
+    post:
+      summary: Add new planet
+      operationId: addPlanet
+      requestBody:
+        required: true
+        description: "Planet object that needs to be added"
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Planet'
+      responses:
+        "201":
+          description: "Created"
+          content:
+             application/json:
+              schema:
+                 $ref: '#/components/schemas/Planet'
+        "400":
+            description: "Bad request"
+            content:
+             application/json:
+              schema:
+                 $ref: '#/components/schemas/Error'
+        "500":
+            description: "Internal server error"
+            content:
+             application/json:
+              schema:
+                 $ref: '#/components/schemas/Error'
+         
+    get:
+      operationId: "FindAllPlanets"
+      summary: Find planets
+      description: Lists all planets
+      parameters:
+        - name: name
+          in: query
+          description: "Filter planet by name"
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Planet"
+        "404":
+          description: "Not found"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      "500":
+          description: "Internal server error"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /planets/{id}:
+    get:
+      operationId: "findPlanetByID"
+      summary: Find planet
+      description: Find planet by ID
+      parameters: 
+        - name: planetID
+          in: path
+          description: Planet ID
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Planet"
+        "404":
+          description: "Not Found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      operationId: "deletePlanetById"
+      summary: Delete planet
+      description: Delete planet by ID
+      parameters: 
+        - name: planetID
+          in: path
+          description: Planet ID
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: "OK"
+        "404":
+          description: "Not Found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    
+components:
+  schemas:
+    Planet:
+      type: object
+      required:
+        - name
+        - climate
+        - terrain
+      properties:            
+        id:
+          type: string
+        name:
+          type: string
+        climate:
+          type: string
+        terrain:
+          type: string
+        film_counts:
+          type: number
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+ 
