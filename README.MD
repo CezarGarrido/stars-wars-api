@@ -68,12 +68,16 @@ Verify the deployment by navigating to your server address in your preferred bro
 $ 127.0.0.1:8089/api/v1/planets
 ```
 
-#### Environment variables
+### Environment variables
 Environment variables that are used in the project. 
 if you do not define these variables default values ​​embedded in the code will be used.
 
 - PORT : HTTP server port, default `8089`.
 - MONGO_URL : MongoDB URL, default `mongodb://localhost:27017`.
+
+### API Documentation
+The api has documentation using the [Open API] specification (https://swagger.io/specification/).
+[doc-api.yml] (doc-api.yml).
 
 ## CURL
 ### Add new planet

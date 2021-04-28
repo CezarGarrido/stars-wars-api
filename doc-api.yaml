@@ -64,7 +64,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      "500":
+        "500":
           description: "Internal server error"
           content:
             application/json:
@@ -134,7 +134,7 @@ components:
           type: string
         terrain:
           type: string
-        film_counts:
+        films_count:
           type: number
     Error:
       type: object
