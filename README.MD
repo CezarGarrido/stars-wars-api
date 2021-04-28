@@ -77,7 +77,7 @@ if you do not define these variables default values ​​embedded in the code w
 
 ### API Documentation
 The api has documentation using the [Open API](https://swagger.io/specification/) especification
-[doc-api.yml](doc-api.yml)
+[doc-api.yml](doc-api.yaml)
 
 ## CURL
 ### Add new planet
